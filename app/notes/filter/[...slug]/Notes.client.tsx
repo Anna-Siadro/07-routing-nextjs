@@ -13,14 +13,18 @@ import Loader from '@/components/Loader/Loader';
 import ErrorMessage from '@/components/ErrorMessage/ErrorMessage';
 import css from './NotesPage.module.css';
 
-export default function NotesClient() {
+interface NotesClientProps {
+  tag?: string;
+}
+
+export default function NotesClient({ tag }: NotesClientProps) {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['notes', search, page],
-    queryFn: () => fetchNotes({ search, page }),
+    queryKey: ['notes', tag ?? 'all', search, page],
+    queryFn: () => fetchNotes({ search, page, tag }),
     placeholderData: keepPreviousData,
     refetchOnMount: false,
   });
@@ -40,7 +44,11 @@ export default function NotesClient() {
       <header className={css.toolbar}>
         <SearchBox onChange={handleSearch} />
         {totalPages > 1 && (
-          <Pagination totalPages={totalPages} currentPage={page} onPageChange={setPage} />
+          <Pagination
+            totalPages={totalPages}
+            currentPage={page}
+            onPageChange={setPage}
+          />
         )}
         <button className={css.button} onClick={() => setIsModalOpen(true)}>
           Create note +
