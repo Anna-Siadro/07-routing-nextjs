@@ -24,6 +24,10 @@ export default function NotePreviewClient() {
 
   return (
     <Modal onClose={close}>
+      <button type="button" className={css.backBtn} onClick={close}>
+        ← Back
+      </button>
+
       {isLoading && <p>Loading, please wait...</p>}
       {(isError || (!isLoading && !note)) && <p>Something went wrong.</p>}
       {note && (
@@ -34,9 +38,7 @@ export default function NotePreviewClient() {
             </div>
             <p className={css.tag}>{note.tag}</p>
             <p className={css.content}>{note.content}</p>
-            <p className={css.date}>
-              {new Date(note.createdAt).toLocaleString()}
-            </p>
+            <p className={css.date}>{new Date(note.createdAt).toLocaleString()}</p>
           </div>
         </div>
       )}

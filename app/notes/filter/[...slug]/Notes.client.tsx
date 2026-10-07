@@ -44,11 +44,7 @@ export default function NotesClient({ tag }: NotesClientProps) {
       <header className={css.toolbar}>
         <SearchBox onChange={handleSearch} />
         {totalPages > 1 && (
-          <Pagination
-            totalPages={totalPages}
-            currentPage={page}
-            onPageChange={setPage}
-          />
+          <Pagination totalPages={totalPages} currentPage={page} onPageChange={setPage} />
         )}
         <button className={css.button} onClick={() => setIsModalOpen(true)}>
           Create note +
